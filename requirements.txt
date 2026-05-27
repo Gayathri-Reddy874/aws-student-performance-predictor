@@ -8,4 +8,4 @@ xgboost
 matplotlib
 seaborn
 dill
--e .
+joblib
