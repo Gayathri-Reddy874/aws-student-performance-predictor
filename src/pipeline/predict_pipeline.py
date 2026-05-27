@@ -11,10 +11,23 @@ class PredictPipeline:
 
     def predict(self, features):
         try:
-            model_path = os.path.join("artifacts", "model.pkl")
-            preprocessor_path = os.path.join("artifacts", "preprocessor.pkl")
+            # 🔥 FIX: absolute path (VERY IMPORTANT for AWS EB)
+            base_path = os.path.dirname(os.path.abspath(__file__))
+
+            model_path = os.path.join(base_path, "..", "..", "artifacts", "model.pkl")
+            preprocessor_path = os.path.join(base_path, "..", "..", "artifacts", "preprocessor.pkl")
 
             print("Before Loading Model")
+
+            # Debug (helpful in AWS logs)
+            print(f"Model path: {model_path}")
+            print(f"Preprocessor path: {preprocessor_path}")
+
+            if not os.path.exists(model_path):
+                raise FileNotFoundError(f"Model file not found at {model_path}")
+
+            if not os.path.exists(preprocessor_path):
+                raise FileNotFoundError(f"Preprocessor file not found at {preprocessor_path}")
 
             model = load_object(file_path=model_path)
             preprocessor = load_object(file_path=preprocessor_path)
@@ -31,15 +44,16 @@ class PredictPipeline:
 
 
 class CustomData:
-    def __init__(self,
-                 gender: str,
-                 race_ethnicity: str,
-                 parental_level_of_education,
-                 lunch: str,
-                 test_preparation_course: str,
-                 reading_score: int,
-                 writing_score: int):
-
+    def __init__(
+        self,
+        gender: str,
+        race_ethnicity: str,
+        parental_level_of_education,
+        lunch: str,
+        test_preparation_course: str,
+        reading_score: int,
+        writing_score: int
+    ):
         self.gender = gender
         self.race_ethnicity = race_ethnicity
         self.parental_level_of_education = parental_level_of_education
