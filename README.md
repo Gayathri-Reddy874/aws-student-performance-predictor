@@ -106,7 +106,7 @@ aws-student-performance-predictor/
 - **ML Libraries:** scikit-learn, CatBoost, XGBoost
 - **Data Handling:** Pandas, NumPy
 - **Serialization:** Pickle / Dill
-- **Deployment:** AWS Elastic Beanstalk, Gunicorn
+- **Deployment & CI/CD:** AWS Elastic Beanstalk, AWS CodePipeline, Gunicorn
 - **Notebook/EDA:** Jupyter Notebook, Matplotlib, Seaborn
 
 ---
@@ -163,15 +163,28 @@ aws-student-performance-predictor/
 
 ---
 
-## ☁️ Deployment (AWS Elastic Beanstalk)
+## ☁️ Deployment — CI/CD with AWS CodePipeline + Elastic Beanstalk
 
-This project is configured for deployment on **AWS Elastic Beanstalk** using:
+This project is **deployed live** on **AWS Elastic Beanstalk**, with deployments fully automated through **AWS CodePipeline**.
+
+**How it works:**
 
 - `Procfile` → tells Elastic Beanstalk to run the app with Gunicorn (`gunicorn application:application`)
 - `wsgi.py` → WSGI entry point
 - `.ebextensions/` → installs system packages (gcc, openssl-devel, etc.) and Python dependencies, and configures the WSGI path
 
-**Deployment steps (high level):**
+**CI/CD pipeline:**
+
+```
+GitHub (main branch) → AWS CodePipeline → AWS Elastic Beanstalk
+```
+
+1. **Source stage** — CodePipeline is connected to this GitHub repository. Every push to the `main` branch automatically triggers the pipeline via a GitHub webhook.
+2. **Deploy stage** — CodePipeline deploys the latest source bundle directly to the Elastic Beanstalk environment, which provisions the EC2 instance(s), installs dependencies via `.ebextensions`, and restarts the app server (Gunicorn) with the new code.
+
+This means any change pushed to `main` is automatically built and rolled out to the live environment — no manual `eb deploy` required.
+
+**Manual deployment (alternative)**, if you want to deploy without setting up CodePipeline:
 
 1. Install the [EB CLI](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html).
 2. Initialize the Elastic Beanstalk application:
@@ -191,9 +204,8 @@ This project is configured for deployment on **AWS Elastic Beanstalk** using:
 
 ## 📈 Future Improvements
 
-- Add CI/CD pipeline (e.g., GitHub Actions) for automated testing and deployment
 - Containerize the app with Docker
-- Add unit tests for pipeline components
+- Add unit tests for pipeline components, run automatically in the CodePipeline build stage
 - Improve UI/UX of the prediction form
 - Add model monitoring and retraining triggers
 
