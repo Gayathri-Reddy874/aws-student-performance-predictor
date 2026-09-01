@@ -16,7 +16,7 @@ This project explores how a student's exam performance is influenced by variable
 
 The goal is to train a regression model that predicts the **Math score** of a student, given the above features along with their Reading and Writing scores.
 
-**Dataset source:** [Students Performance in Exams — Kaggle](https://www.kaggle.com/datasets/spscientist/students-performance-in-exams) (1000 rows × 8 columns)
+**Dataset source:** [Students Performance in Exams - Kaggle](https://www.kaggle.com/datasets/spscientist/students-performance-in-exams) (1000 rows × 8 columns)
 
 ---
 
