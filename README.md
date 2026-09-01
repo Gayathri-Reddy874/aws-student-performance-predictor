@@ -163,7 +163,7 @@ aws-student-performance-predictor/
 
 ---
 
-## ☁️ Deployment — CI/CD with AWS CodePipeline + Elastic Beanstalk
+## ☁️ Deployment - CI/CD with AWS CodePipeline + Elastic Beanstalk
 
 This project is **deployed live** on **AWS Elastic Beanstalk**, with deployments fully automated through **AWS CodePipeline**.
 
