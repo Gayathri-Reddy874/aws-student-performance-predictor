@@ -180,7 +180,7 @@ GitHub (main branch) → AWS CodePipeline → AWS Elastic Beanstalk
 ```
 
 1. **Source stage** - CodePipeline is connected to this GitHub repository. Every push to the `main` branch automatically triggers the pipeline via a GitHub webhook.
-2. **Deploy stage** — CodePipeline deploys the latest source bundle directly to the Elastic Beanstalk environment, which provisions the EC2 instance(s), installs dependencies via `.ebextensions`, and restarts the app server (Gunicorn) with the new code.
+2. **Deploy stage** - CodePipeline deploys the latest source bundle directly to the Elastic Beanstalk environment, which provisions the EC2 instance(s), installs dependencies via `.ebextensions`, and restarts the app server (Gunicorn) with the new code.
 
 This means any change pushed to `main` is automatically built and rolled out to the live environment — no manual `eb deploy` required.
 
